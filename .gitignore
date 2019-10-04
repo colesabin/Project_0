@@ -1,3 +1,9 @@
+# Binaries (products)
+bin/py_strip
+
+# Generated
+*.yy.cpp
+
 # Prerequisites
 *.d
 

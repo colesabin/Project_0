@@ -9,6 +9,7 @@ CCOPTS = -L /usr/local/lib
 REFLEX_INCLUDE = /usr/local/include/reflex
 REFLEX = reflex
 CC = g++ -std=c++11 -stdlib=libc++
+PRODUCT = ../bin/py_strip
 
 default: lexer
 
@@ -23,6 +24,6 @@ lexer: ../bin/py_strip
 clean:
 	rm -f *.o
 	rm -f lex.yy.cpp
-	rm -f .../bin/*
+	rm -f ${PRODUCT}
 
 
