@@ -15,12 +15,10 @@ default: lexer
 lex.yy.cpp:	py_strip.lxx
 	$(REFLEX) --nodefault $^
 
-lexer: ../bin/lexer
+lexer: ../bin/py_strip
 
-../bin/lexer:  lex.yy.cpp
+../bin/py_strip:  lex.yy.cpp
 	$(CC) $(CCOPTS) -o ../bin/lexer -I $(REFLEX_INCLUDE) -l reflex $^
-
-# There should be more dependencies for the header files, but I'm lazy.
 
 clean:
 	rm -f *.o
