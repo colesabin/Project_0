@@ -19,7 +19,7 @@ lex.yy.cpp:	py_strip.lxx
 lexer: ../bin/py_strip
 
 ../bin/py_strip:  lex.yy.cpp
-	$(CC) $(CCOPTS) -o ../bin/lexer -I $(REFLEX_INCLUDE) -l reflex $^
+	$(CC) $(CCOPTS) -o ${PRODUCT} -I $(REFLEX_INCLUDE) -l reflex $^
 
 clean:
 	rm -f *.o
