@@ -16,7 +16,7 @@ in /usr/local/include/reflex, and 'reflex' on the
 search path.  (The CIS 461 docker file has 
 RE/flex installed this way.)
 
-##To build 
+## To build 
 (on a Unix system, including MacOS): 
 
 `make`
@@ -24,7 +24,7 @@ RE/flex installed this way.)
 This will invoke the Makefile in the 'src' directory
 and produce a binary in the 'bin' directory. 
 
-##To run
+## To run
 (after building)
 
 `bin/py_strip < data/assembler_pass1_save.py` 
