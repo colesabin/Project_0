@@ -1,0 +1,13 @@
+# See https://editorconfig.org/
+#
+# Needed if you edit Makefiles with CLion, to prevent CLion from deciding
+# that 'make' is surely a reasonable program that does not distinguish
+# tabs from spaces. WRONG!  Make is around 40 years old, and although it
+# is still better than most of its descendants (Ant, Maven, etc), its
+# input syntax is way creaky.
+#
+# The lines below tell CLion:  In a Makefile, tabs gotta be tabs
+#
+
+[Makefile]
+indent_style = tab
