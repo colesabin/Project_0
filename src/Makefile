@@ -4,11 +4,12 @@
 # portable CMakelists.txt
 #
 # Local tool paths and commands  (Varies by installation)
+REFLEX_LIB = /usr/local/lib/libreflex.a
 CCOPTS = -L /usr/local/lib
-# REFLEX_LIB = /usr/local/lib/libreflex.a
 REFLEX_INCLUDE = /usr/local/include/reflex
 REFLEX = reflex
-CC = g++ -std=c++11 -stdlib=libc++
+# CC = g++ -std=c++11 -stdlib=libc++
+CC = g++
 PRODUCT = ../bin/py_strip
 
 default: lexer
@@ -19,7 +20,7 @@ lex.yy.cpp:	py_strip.lxx
 lexer: ../bin/py_strip
 
 ../bin/py_strip:  lex.yy.cpp
-	$(CC) $(CCOPTS) -o ${PRODUCT} -I $(REFLEX_INCLUDE) -l reflex $^
+	$(CC) $^ -o ${PRODUCT} -I $(REFLEX_INCLUDE) $(CCOPTS) -lreflex
 
 clean:
 	rm -f *.o
