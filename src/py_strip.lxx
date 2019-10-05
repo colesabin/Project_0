@@ -14,13 +14,11 @@
   /* Lexical states to avoid big hairy patterns ---
    * %x is for an 'exclusive' state.
    * See https://www.genivia.com/doc/reflex/html/index.html#reflex-states
-   * Python has 's', "s", ""s"", ''s'', """s""", '''s'''.
+   * Python has 's', "s",  """s""", '''s'''.
    * We'll abbreviate quoted modes with q for ', Q for "
    */
 %x q
 %x Q
-%x qq
-%x QQ
 %x qqq
 %x QQQ
 
@@ -31,23 +29,19 @@
 
   /* Strings.  We'll preserve them, although maybe we should chop them?  */
 \'       { echo(); start(q); }
-\'\'     { echo(); start(qq); }
 \'\'\'   { echo(); start(qqq); }
 \"       { echo(); start(Q); }
-\"\"     { echo(); start(QQ); }
 \"\"\"   { echo(); start(QQQ); }
 
    /* How the quoted strings end */
 <q>\'        { std::cout << "@"; echo(); start(INITIAL); }
-<qq> \'\'    { std::cout << "@"; echo(); start(INITIAL); }
 <qqq>\'\'\'  { echo(); std::cout << "@"; start(INITIAL); }
 <Q>\"        { std::cout << "@"; echo(); start(INITIAL); }
-<QQ>\"\"     { std::cout << "@"; echo(); start(INITIAL); }
 <QQQ>\"\"\"  { std::cout << "@"; echo(); start(INITIAL);}
 
 
    /* They all gobble any escaped character */
-<q,qq,qqq,Q,QQ,QQQ>[\\].  { ;  }
+<q,qqq,Q,QQQ>[\\].  { ;  }
 
   /* Only triple-quoted strings can gobble unescaped newlines.
    *  (Note the wild-card character '.' does not match newline)
@@ -57,7 +51,7 @@
   /* They gobble anything else. We do it one character at a time so that
    * we don't have to make exceptions for the quote marks.
    */
-<q,qq,qqq,Q,QQ,QQQ>.  { ;  }
+<q,qqq,Q,QQQ>.  { ;  }
 
 
   /* Keywords and built-in functions that we preserve.
@@ -131,4 +125,4 @@ __iter__|__len__|__contains__   echo();
 
 /* For simple filters, the main program can go here. */
 
-int main() { return yy::Lexer().yylex(); exit(0); }
+int main() {  yy::Lexer().yylex(); exit(0); }
