@@ -113,9 +113,6 @@ __iter__|__len__|__contains__   echo();
 
 ([ \n\r\t]|#.*)*\n  { std::cout << "\n"; }
 
-  /* Also remove lines that contain only comments */
-[ \t]*#$        { ; }
-
   /* Everything else is preserved. '.' matches any character but newline. */
 . echo();
 
