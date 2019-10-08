@@ -1,6 +1,5 @@
 %top{
-/* Python source normalization for plagiarism checker
- * (example only)
+/* Project 0
  * 2019 Fall version with RE/flex,
  *
  */
@@ -32,7 +31,8 @@
 
 %%
 
-/* For simple filters, the main program can go here. */
+/* Main program taken from the RE/flex user manual at
+ * https://www.genivia.com/doc/reflex/html/#reflex-spec-user */
 
 int main(int argc, char **argv)
 {
