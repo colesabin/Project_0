@@ -6,6 +6,7 @@
  */
 
  #include <iostream>
+ #include <fstream>
 %}
 
 %option noyywrap
@@ -15,21 +16,35 @@
 %x Q
 
 %%
-\' { std::cout << "&lsquo;"; start(q); }
-\" { std::cout << "&ldquo;"; start(Q); }
 
-<q>\' { std::cout << "&rsquo;"; start(INITIAL); }
-<Q>\" { std::cout << "&rdquo;"; start(INITIAL); }
+\' { out() << "&lsquo;"; start(q); }
+\" { out() << "&ldquo;"; start(Q); }
+
+<q>\' { out() << "&rsquo;"; start(INITIAL); }
+<Q>\" { out() << "&rdquo;"; start(INITIAL); }
 <q,Q>. echo();
 <q,Q>[\\]. echo();
-<q,Q>([ \n\r\t]|#.*)*\n  { std::cout << "<br /> \n"; }
-([ \n\r\t]|#.*)*\n  { std::cout << "<br /> \n"; }
+<q,Q>([ \n\r\t]|#.*)*\n  { out() << "<br /> \n"; }
+([ \n\r\t]|#.*)*\n  { out() << "<br /> \n"; }
 . echo();
-
+(\\\") { out() << "\""; }
 <<EOF>>  { return 0; }
 
 %%
 
 /* For simple filters, the main program can go here. */
 
-int main() {  yy::Lexer().yylex(); exit(0); }
+int main(int argc, char **argv)
+{
+  FILE *fd = stdin;
+  if (argc > 1 && (fd = fopen(argv[1], "r")) == NULL)
+    exit(EXIT_FAILURE);
+  std::ofstream of("output.html", std::ofstream::out);
+  if (!of)
+    exit(EXIT_FAILURE);
+  yy::Lexer(fd, of).yylex();
+  of.close();
+  if (fd != stdin)
+    fclose(fd);
+  return 0;
+}
