@@ -6,7 +6,7 @@ line breaks are added to new lines.
 ## To build
 After downloading the repo use the following command to create a docker image:
 
-`docker build --tag=proj0`
+`docker build --tag=proj0 .`
 
 Then to run the image:
 

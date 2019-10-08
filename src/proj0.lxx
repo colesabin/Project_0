@@ -11,21 +11,27 @@
 %option noyywrap
 %option namespace=yy lexer=Lexer lex=yylex
 
+/* Modes for quotes, q is single, Q is double */
 %x q
 %x Q
 
 %%
-
+/* Catch a quote, go into quote mode */
 \' { out() << "&lsquo;"; start(q); }
 \" { out() << "&ldquo;"; start(Q); }
 
+/* Get a second quote, end quote mode */
 <q>\' { out() << "&rsquo;"; start(INITIAL); }
 <Q>\" { out() << "&rdquo;"; start(INITIAL); }
+
+/* Everything between quotes is unchanged */
 <q,Q>. echo();
 <q,Q>[\\]. echo();
+/* Add some line breaks */
 <q,Q>([ \n\r\t]|#.*)*\n  { out() << "<br /> \n"; }
 ([ \n\r\t]|#.*)*\n  { out() << "<br /> \n"; }
 . echo();
+/* \" prints " when not in quote mode */
 (\\\") { out() << "\""; }
 <<EOF>>  { return 0; }
 
