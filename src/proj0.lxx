@@ -1,0 +1,35 @@
+%top{
+/* Python source normalization for plagiarism checker
+ * (example only)
+ * 2019 Fall version with RE/flex,
+ *
+ */
+
+ #include <iostream>
+%}
+
+%option noyywrap
+%option namespace=yy lexer=Lexer lex=yylex
+
+%x q
+%x Q
+
+%%
+\' { std::cout << "&lsquo;"; start(q); }
+\" { std::cout << "&ldquo;"; start(Q); }
+
+<q>\' { std::cout << "&rsquo;"; start(INITIAL); }
+<Q>\" { std::cout << "&rdquo;"; start(INITIAL); }
+<q,Q>. echo();
+<q,Q>[\\]. echo();
+<q,Q>([ \n\r\t]|#.*)*\n  { std::cout << "<br /> \n"; }
+([ \n\r\t]|#.*)*\n  { std::cout << "<br /> \n"; }
+. echo();
+
+<<EOF>>  { return 0; }
+
+%%
+
+/* For simple filters, the main program can go here. */
+
+int main() {  yy::Lexer().yylex(); exit(0); }

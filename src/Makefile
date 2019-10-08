@@ -10,21 +10,19 @@ REFLEX_INCLUDE = /usr/local/include/reflex
 REFLEX = reflex
 # CC = g++ -std=c++11 -stdlib=libc++
 CC = g++
-PRODUCT = ../bin/py_strip
+PRODUCT = ../bin/proj0
 
 default: lexer
 
-lex.yy.cpp:	py_strip.lxx
+lex.yy.cpp:	proj0.lxx
 	$(REFLEX) --nodefault $^
 
-lexer: ../bin/py_strip
+lexer: ../bin/proj0
 
-../bin/py_strip:  lex.yy.cpp
+../bin/proj0:  lex.yy.cpp
 	$(CC) $^ -o ${PRODUCT} -I $(REFLEX_INCLUDE) $(CCOPTS) -lreflex
 
 clean:
 	rm -f *.o
 	rm -f lex.yy.cpp
 	rm -f ${PRODUCT}
-
-

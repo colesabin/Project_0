@@ -1,0 +1,6 @@
+This is a test file. "WOWZERS."
+'Testing single quotes.'
+"This is a
+test of something."
+This too "is a \" test".
+"'Another Test'" and '"Another"'
